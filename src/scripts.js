@@ -1,7 +1,7 @@
 // This is the JavaScript entry file - your code begins here
 // Do not delete or rename this file ********
 
-// console.log(userData,"<>>>>userData")
+console.log(userData,"<>>>>userData")
 // An example of how you tell webpack to use a CSS file
 import './html-css/styles.css';
 
@@ -26,13 +26,6 @@ Promise.all([userPromise, hydrationPromise, sleepPromise])
         }
 })
 
-
-// console.log(userRepo)
-// apiCalls.loadUsers(userRepo)
-
-// import userData from './data/users';
 import apiCalls from './apiCalls';
 import UserRepository from './UserRepository';
-// import hydrationTestData from '../test/hydration-test-data';
-// import sleepTestData from '../test/sleep-test-data';
 
