@@ -73,6 +73,7 @@ body, html {
 .single-friend {
   display: flex;
   align-items: center;
+  margin-top: 6%;
 }
 
 .friend-avatar {
