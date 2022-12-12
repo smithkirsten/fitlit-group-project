@@ -1,16 +1,10 @@
-// This is the JavaScript entry file - your code begins here
-// Do not delete or rename this file ********
-
-// An example of how you tell webpack to use a CSS file
-import './html-css/styles.css';
+// File imports
+import './styles.css';
 import activityCharts from './activityCharts';
 import apiCalls from './apiCalls';
 import UserRepository from './UserRepository';
-// import updateHydroDateChart from './activityCharts';
-// import { todaysHydroChart } from './activityCharts'
-
-// An example of how you tell webpack to use an image (also need to link to it in the index.html)
-import './images/turing-logo.png'
+// Image imports
+import './images/walkingIcon.svg';
 
 // Query Selectors
 const userPromise = apiCalls.loadUserData()
@@ -18,7 +12,6 @@ const hydrationPromise = apiCalls.loadHydrationData()
 const sleepPromise = apiCalls.loadSleepData()
 const welcomeMessage = document.querySelector('#welcomeMessage')
 const friendsDisplay = document.querySelector('#friends')
-const stepGoal = document.querySelector('#stepGoal')
 const stepGoalVsAvg = document.querySelector('#stepGoalVsAvg')
 const userProfile = document.querySelector('#profile')
 const userName = document.querySelector('#userName')
@@ -43,25 +36,25 @@ window.addEventListener('load', function () {
             currentUser = userRepo.selectedUser
             showPersonalizedWelcome();
             showUserInfoDisplay();
-            displayUserStepGoal();
             displayStepGoalComparison();
             displaySelectedUserInformation();
             displayHydrationData();
             displaySleepData();
             activityCharts.updateHydroDateChart();
-            activityCharts.updateStepChart(); //update charts upon page load
+            activityCharts.updateStepChart();
             activityCharts.updateSleepChart();
             activityCharts.updateHydroWeeklyChart();
         });
 });
 
 userAvatar.addEventListener('click', toggleProfileInfo)
+userName.addEventListener('click', toggleProfileInfo)
 
 // Welcome message display
 function showPersonalizedWelcome() {
   let selectedMsgInt = Math.floor(Math.random() * (2 - 0 + 1));
   let randomGreetings = [`Let's Carpe this Diem!`, `You miss 100% of the shots you don't take.`, `You can have results or excuses, not both.`];
-  welcomeMessage.innerText = `Welcome, ${userRepo.selectedUser.name}! - - ${randomGreetings[selectedMsgInt]}`;
+  welcomeMessage.innerText = `Welcome, ${userRepo.selectedUser.name}! ${randomGreetings[selectedMsgInt]}`;
 }
 
 function selectRandom(selectedArray){
@@ -98,17 +91,20 @@ function toggleProfileInfo() {
   }
 }
 
-// User step goal display
-function displayUserStepGoal() {
-  stepGoal.innerText = `Step goal: ${userRepo.selectedUser.dailyStepGoal} steps per day`;
-}
 
 // Step Goal vs. Avg all users
 function displayStepGoalComparison() {
-  // Added space manually with this interpolation but can fix later with CSS
-  stepGoalVsAvg.innerText = `Your step goal: ${userRepo.selectedUser.dailyStepGoal}
+  if (userRepo.selectedUser.dailyStepGoal > userRepo.averageSteps()) {
+    let stepGoalDiff =  userRepo.selectedUser.dailyStepGoal - userRepo.averageSteps();
+    stepGoalVsAvg.innerText = `Nice work! Your step goal is
+    ${stepGoalDiff} steps above average!`
+  } else {
+    let stepGoalDiff =  userRepo.averageSteps() - userRepo.selectedUser.dailyStepGoal;
+    stepGoalVsAvg.innerText = `Your step goal is ${stepGoalDiff} steps below average.
 
-  Average Step Goal: ${userRepo.averageSteps()}`
+    Consider increasing your goal for your fitness.`
+  }
+  
 }
 // Hydration data display
 function displayHydrationData() {
@@ -140,16 +136,17 @@ function displaySleepData() {
 }
 // User Profile Information Display
 function displaySelectedUserInformation() {
-  // Added space manually with this interpolation but can fix later with CSS
-  userProfile.innerText = `${userRepo.selectedUser.name}
-
+  userProfile.innerText = `Mailing Address:
   ${userRepo.selectedUser.address}
 
+  Email Address:
   ${userRepo.selectedUser.email}
 
-  ${userRepo.selectedUser.dailyStepGoal}
+  Daily Step Goal:
+  ${userRepo.selectedUser.dailyStepGoal} steps
 
-  ${userRepo.selectedUser.strideLength}`
+  Stride Length:
+  ${userRepo.selectedUser.strideLength} feet`
 }
 
 export { userRepo };

@@ -29,7 +29,6 @@ const updateHydroDateChart = () => {
     const numDrunk = userRepo.selectedUser.findDaysHydration(todaysDate).numOunces;
     const goal = 64;
     const ozLeft = findHydroPercentage(numDrunk, goal);
-    console.log('ounces left: ', ozLeft);
     todaysHydroChart = new Chart(hydroDayChart, {
         type: 'doughnut',
         data: {
@@ -48,17 +47,15 @@ const updateHydroDateChart = () => {
 
 const updateHydroWeeklyChart = () => {
     const todaysDate = userRepo.selectedUser.findLatestDate(userRepo.selectedUser.hydrationData)
-    console.log(todaysDate)
     const weeklyHydration = userRepo.selectedUser.findWeekHydration(todaysDate)
     weeklyHydration.reverse();
-    console.log(weeklyHydration)
     weeksHydroChart = new Chart(hydroWeekChart, {
         type: 'bar',
         data: {
             labels: ['Day 1','Day 2','Day 3','Day 4','Day 5','Day 6', 'Day 7'],
             datasets: [
                 {
-                    label: 'Daily Intake',
+                    label: 'Daily Intake in Ounces',
                     data: [weeklyHydration[0].numOunces, weeklyHydration[1].numOunces, weeklyHydration[2].numOunces, weeklyHydration[3].numOunces,weeklyHydration[4].numOunces, weeklyHydration[5].numOunces, weeklyHydration[6].numOunces],
                     type: 'line',
                     backgroundColor: ['#BF1263'],
@@ -70,9 +67,7 @@ const updateHydroWeeklyChart = () => {
 }
 const updateStepChart = () => {
     const userStepGoal = userRepo.selectedUser.dailyStepGoal
-    console.log(userStepGoal)
     const avgStepGoal = userRepo.averageSteps()
-    console.log(avgStepGoal)
     stepComparisonChart = new Chart(stepChart, {
         type: 'bar',
         data: {
@@ -80,23 +75,22 @@ const updateStepChart = () => {
             datasets: [{
               label: 'Step Goal',
               data: [avgStepGoal, userStepGoal],
-              backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(255, 159, 64, 0.2)',
-              ],
-              borderColor: [
-                'rgb(255, 99, 132)',
-                'rgb(255, 159, 64)',
-              ],
-              borderWidth: 1
+              backgroundColor: ['#BF1363', '#F39237'],
             }]
           },
         options: {
           scales: {
             y: {
               beginAtZero: true
-            }
-          }}
+            },
+          },
+          // this removes the legend
+          plugins: {
+            legend: {
+                display: false
+            },
+          },
+        }
     })
   }
 
@@ -121,7 +115,7 @@ const updateSleepChart = () => {
             // this dataset is drawn on top
             order: 1
         }],
-        labels: [`${userSleepWeek[0].date}`, ``, ``, `${userSleepWeek[3].date}`, ``, ``, `${userSleepWeek[6].date}`]
+        labels: ['Day 1','Day 2','Day 3','Day 4','Day 5','Day 6', 'Day 7']
     },
     // options: {
     //   aspect-ratio: {1000 / 500};
