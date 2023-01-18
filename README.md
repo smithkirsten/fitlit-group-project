@@ -13,12 +13,14 @@
 Tracking progress while going through your health and wellness journey can be difficult and complicated. Fortunately FitLit is here to save the day! Through this web app user data can be collected, stored, and displayed to the user in truly meaningful ways. By using FitLit you can track a user's progress on important health aspects like step goals, sleep, and hydration while also being able to compare them to user averages for all three categories. 
 
 ### Installation Instructions:
-- Fork the repository found here: https://github.com/smithkirsten/fitlit-group-project  
-- Clone down your new, forked repo. While cloning, name it what you want your local repo to be named, and run `git clone`. 
+- Clone down the Local Server
+- Cd into the repository and rn npm install, followed by npm start
+- **Leave this server running and then**
+- Clone down this repository
 - cd into the repository
 - Install NPM packages by running `npm install` in your terminal
 - Start the server by running `npm start` in your server  
-- After starting the server, the project will run at http://localhost:8080/
+- After starting the server, the project will run in your browser at http://localhost:8080/
 
 ### Preview of App:
 
